@@ -34,5 +34,10 @@
             <version>15.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>nl.avasten.spi</groupId>
+            <artifactId>SoundEffectEcho</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

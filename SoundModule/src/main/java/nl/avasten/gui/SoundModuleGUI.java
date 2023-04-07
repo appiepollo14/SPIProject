@@ -16,7 +16,7 @@ public class SoundModuleGUI implements ActionListener {
     private JTextPane textPane1;
     private JPanel OptionPanel;
     private JTextField textField1;
-    private JLabel nameLabel;
+    private JLabel nameLabel = new JLabel();
     //    private JCheckBox checkBoxDeformation;
 //    private JCheckBox checkBoxDistortion;
     private SoundModule soundModule;

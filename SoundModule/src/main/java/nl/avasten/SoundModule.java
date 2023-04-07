@@ -17,7 +17,7 @@ public class SoundModule {
     SoundModuleGUI gui;
 
     public SoundModule() {
-        //this.effectList = EffectLoader.providers();
+        this.effectList = EffectLoader.providers();
         this.effectList.add(Distortion.getInstance());
         this.effectList.add(Deformation.getInstance());
         JFrame frame = new JFrame("SoundEffects");
@@ -28,7 +28,6 @@ public class SoundModule {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 400);
         frame.setVisible(true);
-        System.out.println(this.effectList.size());
     }
 
     public void addEffectToList(Effect effect) {

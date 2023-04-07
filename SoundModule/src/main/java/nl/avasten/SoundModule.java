@@ -1,5 +1,11 @@
 package nl.avasten;
 
+import nl.avasten.effectLoader.EffectLoader;
+import nl.avasten.gui.SoundModuleGUI;
+import nl.avasten.song.Song;
+import nl.avasten.soundEffects.Deformation;
+import nl.avasten.soundEffects.Distortion;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +17,18 @@ public class SoundModule {
     SoundModuleGUI gui;
 
     public SoundModule() {
+        //this.effectList = EffectLoader.providers();
+        this.effectList.add(Distortion.getInstance());
+        this.effectList.add(Deformation.getInstance());
         JFrame frame = new JFrame("SoundEffects");
+        frame.setTitle("Sound box!");
+
         gui = new SoundModuleGUI(this);
         frame.setContentPane(gui.getRootPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 400);
         frame.setVisible(true);
+        System.out.println(this.effectList.size());
     }
 
     public void addEffectToList(Effect effect) {

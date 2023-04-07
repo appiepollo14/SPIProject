@@ -1,4 +1,6 @@
-package nl.avasten;
+package nl.avasten.soundEffects;
+
+import nl.avasten.Effect;
 
 import java.util.Random;
 
@@ -6,8 +8,14 @@ public class Deformation implements Effect {
     Random random = new Random();
 
     private static Deformation deformation = null;
+    private String soundEffectName;
 
     private Deformation() {
+        this.soundEffectName = "Deformation";
+    }
+
+    public String getSoundEffectName() {
+        return this.soundEffectName;
     }
 
     public static Deformation getInstance() {

@@ -1,10 +1,18 @@
-package nl.avasten;
+package nl.avasten.soundEffects;
+
+import nl.avasten.Effect;
 
 public class Distortion implements Effect {
 
     private static Distortion distortion = null;
+    private String soundEffectName;
 
     private Distortion() {
+        this.soundEffectName = "Distortion";
+    }
+
+    public String getSoundEffectName() {
+        return this.soundEffectName;
     }
 
     public static Distortion getInstance() {

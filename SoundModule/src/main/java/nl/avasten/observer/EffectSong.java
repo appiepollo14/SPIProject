@@ -1,4 +1,7 @@
-package nl.avasten;
+package nl.avasten.observer;
+
+import nl.avasten.Effect;
+import nl.avasten.SoundModule;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

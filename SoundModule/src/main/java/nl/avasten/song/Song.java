@@ -1,4 +1,8 @@
-package nl.avasten;
+package nl.avasten.song;
+
+import nl.avasten.Effect;
+import nl.avasten.SoundModule;
+import nl.avasten.observer.EffectSong;
 
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -6,17 +10,13 @@ import java.util.List;
 
 public class Song {
     private String name;
-    // TODO Check whether this is OKAY
-//    private String lyricsOriginal;
     private EffectSong effectSong;
-    //    private String lyricsAfterEffect;
     private List<Effect> effectList = new ArrayList<>();
     private PropertyChangeSupport support;
 
     public Song(String name, String lyricsOriginal, SoundModule soundModule) {
         this.effectSong = new EffectSong(lyricsOriginal, soundModule);
         this.name = name;
-//        this.effectSong.setLyricsOriginal(lyricsOriginal);
         support = new PropertyChangeSupport(this);
         support.addPropertyChangeListener(this.effectSong);
     }

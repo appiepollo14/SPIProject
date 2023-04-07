@@ -17,24 +17,15 @@ public class SoundModuleGUI implements ActionListener {
     private JPanel OptionPanel;
     private JTextField textField1;
     private JLabel nameLabel = new JLabel();
-    //    private JCheckBox checkBoxDeformation;
-//    private JCheckBox checkBoxDistortion;
     private SoundModule soundModule;
-//    private JCheckBox jCheckBox;
 
-    private boolean intitialized = false;
+    private boolean initialized = false;
 
     public SoundModuleGUI(SoundModule soundModule) {
-//        checkBoxDeformation.setText("Deformation");
-//        checkBoxDistortion.setText("Distortion");
         nameLabel.setText("Input song name: ");
         buttonApply.addActionListener(this);
-//        checkBoxDeformation.setVisible(false);
-//        checkBoxDistortion.setVisible(false);
         buttonApply.setText("Choose song");
         this.soundModule = soundModule;
-//        checkBoxDistortion.addActionListener(this);
-//        checkBoxDeformation.addActionListener(this);
         createCheckBoxes(soundModule.getEffectList());
     }
 
@@ -46,15 +37,16 @@ public class SoundModuleGUI implements ActionListener {
 
         // Create GridBagConstraints to specify layout properties
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0; // Set the starting column to 0
-        gbc.gridy = 0; // Set the starting row to 0
-        gbc.anchor = GridBagConstraints.WEST; // Align checkboxes to the left
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Make checkboxes fill available horizontal space
-
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         for (Effect e : effects) {
             JCheckBox checkBox = new JCheckBox(e.getSoundEffectName());
             checkBox.setText(e.getSoundEffectName());
             checkBox.setVisible(true);
+            checkBox.addActionListener(this);
+            checkBox.setActionCommand(e.getClass().getName());
             // Add any additional settings or customization to the checkbox
             // For example, you can set the text, add action listeners, etc.
             OptionPanel.add(checkBox, gbc); // Add the checkbox to your OptionPanel
@@ -69,42 +61,58 @@ public class SoundModuleGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonApply) {
-            if (!intitialized) {
+            if (!initialized) {
                 if (!textField1.getText().isEmpty() && !textPane1.getText().isEmpty()) {
                     soundModule.addSongToList(new Song(textField1.getText(), textPane1.getText(), soundModule));
                     textPane1.setText(soundModule.playSong(textField1.getText()));
                     textField1.setEditable(false);
                     textPane1.setEditable(false);
-                    intitialized = true;
+                    initialized = true;
 //                    checkBoxDeformation.setVisible(true);
 //                    checkBoxDistortion.setVisible(true);
                     buttonApply.setText("Apply effect");
                     buttonApply.setVisible(false);
                 } else textPane1.setText("Choose a song name and song lyrics");
             }
-            if (intitialized) {
+            if (initialized) {
 
 
                 System.out.println(soundModule.playSong(textField1.getText()));
 
             }
-        }
+        } else {
+            String actionCommand = e.getActionCommand();
+            Effect effect;
 
-//        if (e.getSource() == checkBoxDistortion) {
-//            if (checkBoxDistortion.isSelected()) {
-//                soundModule.addEffectToSong(textField1.getText(), Distortion.getInstance());
-//
-//            } else if (!checkBoxDistortion.isSelected()) {
-//                soundModule.removeEffectFromSong(textField1.getText(), Distortion.getInstance());
-//            }
-//
-//        }
-//        if (e.getSource() == checkBoxDeformation) {
-//            if (checkBoxDeformation.isSelected()) {
-//                soundModule.addEffectToSong(textField1.getText(), Deformation.getInstance());
-//            } else if (!checkBoxDeformation.isSelected()) {
-//                soundModule.removeEffectFromSong(textField1.getText(), Deformation.getInstance());
-//            }
-//        }
+
+            // TODO make this better
+            try {
+                Class<?> effectClass = Class.forName(actionCommand);
+
+                effect = (Effect) effectClass.newInstance();
+
+
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InstantiationException ex) {
+                throw new RuntimeException(ex);
+            } catch (IllegalAccessException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            //TODO make this work.
+            // TODO implementation of singleton is an issue
+            // TODO echo implementation is incorrect as songtext stays "Test"
+            Object source = e.getSource();
+            if (source instanceof JCheckBox) {
+                JCheckBox checkBox = (JCheckBox) source;
+                if (checkBox.isSelected()) {
+                    soundModule.addEffectToSong(textField1.getText(), effect);
+                } else if (!checkBox.isSelected()) {
+                    soundModule.removeEffectFromSong(textField1.getText(), effect);
+                }
+            }
+
+        }
     }
 }

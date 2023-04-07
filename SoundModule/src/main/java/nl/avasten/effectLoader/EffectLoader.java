@@ -14,7 +14,6 @@ public class EffectLoader {
         loader.forEach(effect -> {
             effects.add(effect);
         });
-        System.out.println(effects.size());
         return effects;
     }
 }

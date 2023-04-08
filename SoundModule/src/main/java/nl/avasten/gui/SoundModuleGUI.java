@@ -46,7 +46,7 @@ public class SoundModuleGUI implements ActionListener {
             checkBox.setText(e.getSoundEffectName());
             checkBox.setVisible(true);
             checkBox.addActionListener(this);
-            checkBox.setActionCommand(e.getClass().getName());
+            checkBox.setActionCommand(e.getSoundEffectName());
             // Add any additional settings or customization to the checkbox
             // For example, you can set the text, add action listeners, etc.
             OptionPanel.add(checkBox, gbc); // Add the checkbox to your OptionPanel
@@ -82,26 +82,9 @@ public class SoundModuleGUI implements ActionListener {
             }
         } else {
             String actionCommand = e.getActionCommand();
-            Effect effect;
 
+            Effect effect = soundModule.getEffectList().stream().filter(effectFromList -> effectFromList.getSoundEffectName().equals(actionCommand)).findFirst().orElseThrow(IllegalArgumentException::new);
 
-            // TODO make this better
-            try {
-                Class<?> effectClass = Class.forName(actionCommand);
-
-                effect = (Effect) effectClass.newInstance();
-
-
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            } catch (InstantiationException ex) {
-                throw new RuntimeException(ex);
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            //TODO make this work.
-            // TODO implementation of singleton is an issue
             // TODO echo implementation is incorrect as songtext stays "Test"
             Object source = e.getSource();
             if (source instanceof JCheckBox) {

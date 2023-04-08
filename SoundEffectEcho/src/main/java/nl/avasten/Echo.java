@@ -9,6 +9,12 @@ public class Echo implements Effect {
 
     @Override
     public String apply(String song) {
-        return "test";
+        StringBuilder result = new StringBuilder();
+        int length = song.length();
+        for (int i = length; i > 0; i--) {
+            String substr = song.substring(length - i);
+            result.append(substr).append(" ");
+        }
+        return result.toString().trim();
     }
 }

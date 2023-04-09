@@ -16,7 +16,7 @@ public class SoundModuleGUI implements ActionListener {
     private JTextPane textPane1;
     private JPanel OptionPanel;
     private JTextField textField1;
-    private JLabel nameLabel = new JLabel();
+    private JLabel nameLabel;
     private SoundModule soundModule;
 
     private boolean initialized = false;
@@ -68,8 +68,6 @@ public class SoundModuleGUI implements ActionListener {
                     textField1.setEditable(false);
                     textPane1.setEditable(false);
                     initialized = true;
-//                    checkBoxDeformation.setVisible(true);
-//                    checkBoxDistortion.setVisible(true);
                     buttonApply.setText("Apply effect");
                     buttonApply.setVisible(false);
                 } else textPane1.setText("Choose a song name and song lyrics");

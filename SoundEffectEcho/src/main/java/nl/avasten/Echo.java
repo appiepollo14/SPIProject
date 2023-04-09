@@ -11,7 +11,7 @@ public class Echo implements Effect {
     public String apply(String song) {
         StringBuilder result = new StringBuilder();
         int length = song.length();
-        for (int i = length; i > 0; i--) {
+        for (int i = length; i > 0; i -= 5) {
             String substr = song.substring(length - i);
             result.append(substr).append(" ");
         }
